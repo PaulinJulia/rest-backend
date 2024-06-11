@@ -1,5 +1,5 @@
 import express from "express";
-import userRoutes from "./resources/jobs/jobs.routes";
+import userRoutes from "./resources/users/users.routes";
 import jobRouters from "./resources/jobs/jobs.routes";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -7,7 +7,6 @@ import bodyParser from "body-parser";
 const app = express();
 const port = 5000;
 
-//Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
