@@ -1,11 +1,13 @@
 import express from "express";
-import userRoutes from "./resources/users/users.routes";
-import jobRouters from "./resources/jobs/jobs.routes";
+import userRouter from "./resources/users/users.routes";
+import jobRouter from "./resources/jobs/jobs.routes";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
-const port = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -13,9 +15,9 @@ app.use(bodyParser.json());
 // app.get('/', (req, res) => {
 //   res.send('Hello, TypeScript with Express!');
 // });
-app.use("/api", userRoutes);
-app.use("/api", jobRouters);
+app.use("/api", userRouter);
+app.use("/api", jobRouter);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

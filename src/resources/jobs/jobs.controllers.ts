@@ -1,82 +1,70 @@
-import { prisma } from "../../db/connect"
+import { prisma } from "../../db/connect";
 import { Request, Response } from "express";
 
-/**
- * @description Get all favorite jobs
- * @route GET /jobs
- */
+//Get all favorite jobs - GET /jobs
 export async function getJobs(req: Request, res: Response) {
   try {
-    const ads = await prisma.favoriteJob.findMany();
+    const jobs = await prisma.favoriteJob.findMany();
 
-    if (!ads.length)
-      return res.status(404).json({ message: "No jobs found" });
+    if (!jobs.length) return res.status(404).json({ message: "No jobs found" });
 
-    res.status(200).json(ads);
+    res.status(200).json(jobs);
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
   }
 }
 
-/**
- * @description Get job
- * @route GET /jobs/:id
- */
+// Get job - GET /jobs/:id
 export async function getJob(req: Request, res: Response) {
   try {
     const { id } = req.params;
 
-    const ad = await prisma.favoriteJob.findUnique({
+    const job = await prisma.favoriteJob.findUnique({
       where: {
         id: id,
       },
     });
 
-    if (!ad) return res.status(404).json({ message: "Job not found" });
+    if (!job) return res.status(404).json({ message: "Job not found" });
 
-    res.status(200).json(ad);
+    res.status(200).json(job);
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
   }
 }
 
-/**
- * @description Get favorite jobs by user
- * @route GET /users/:userId/jobs
- */
-
+//Get jobs by user - GET /users/:userId/jobs
 export async function getJobsByUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
 
-    const ads = await prisma.favoriteJob.findMany({
+    const jobs = await prisma.favoriteJob.findMany({
       where: {
         userId: parseInt(userId),
       },
     });
 
-    if (!ads.length)
-      return res.status(404).json({ message: "No favorite job found for this user" });
+    if (!jobs.length)
+      return res
+        .status(404)
+        .json({ message: "No favorite job found for this user" });
 
-    res.status(200).json(ads);
+    res.status(200).json(jobs);
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
   }
 }
 
-/**
- * @description Create/save job ad by user
- * @route POST /users/:userId/jobs
- */
+// Create/save job by user - POST /users/:userId/jobs
 export async function createJobByUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
     const { headline, brief, employer } = req.body;
 
-    const ad = await prisma.favoriteJob.create({
+    const job = await prisma.favoriteJob.create({
       data: {
         headline,
         brief,
@@ -85,34 +73,32 @@ export async function createJobByUser(req: Request, res: Response) {
       },
     });
 
-    res.status(201).json({ id: ad.id, message: "Favorite job created!" });
+    res.status(201).json({ id: job.id, message: "Favorite job created!" });
   } catch (error) {
     console.error("Error details:", error);
     res.status(500).json({ error: "Database query failed!" });
   }
 }
 
-/**
- * @description Update job
- * @route PUT /jobs/:id
- */
-
+//Update job - PUT /jobs/:id
 export async function updateJob(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const { headline, brief } = req.body;
+    const { headline, brief, employer } = req.body;
 
-    const post = await prisma.favoriteJob.update({
+    const job = await prisma.favoriteJob.update({
       where: {
         id: id,
       },
       data: {
         headline,
         brief,
+        employer,
       },
     });
 
-    if (!post) return res.status(404).json({ error: "Favorite job not updated!" });
+    if (!job)
+      return res.status(404).json({ error: "Favorite job not updated!" });
 
     res.status(200).json({ message: "Favorite job updated!" });
   } catch (error) {
@@ -121,22 +107,19 @@ export async function updateJob(req: Request, res: Response) {
   }
 }
 
-/**
- * @description Delete favorite job
- * @route DELETE /jobs/:id
- */
-
+//Delete favorite job - DELETE /jobs/:id
 export async function deleteJob(req: Request, res: Response) {
   try {
     const { id } = req.params;
 
-    const post = await prisma.favoriteJob.delete({
+    const job = await prisma.favoriteJob.delete({
       where: {
         id: id,
       },
     });
 
-    if (!post) return res.status(404).json({ error: "Favorite job not deleted!" });
+    if (!job)
+      return res.status(404).json({ error: "Favorite job not deleted!" });
 
     res.status(200).json({ message: "Favorite job deleted!" });
   } catch (error) {

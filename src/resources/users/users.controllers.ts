@@ -8,10 +8,7 @@ interface Query {
   order?: "asc" | "desc";
 }
 
-/**
- * @description Get all users
- * @route GET /users
- */
+//Get all users - GET /users
 export async function getUsers(req: Request<{}, {}, {}, Query>, res: Response) {
   //api/users/?limit=21&sort=username&order=asc
   // limit - pagination - default 10
@@ -43,11 +40,7 @@ export async function getUsers(req: Request<{}, {}, {}, Query>, res: Response) {
   }
 }
 
-/**
- * @description Get user
- * @route GET /users/:id
- */
-
+//Get user by id - GET /users/:id
 export async function getUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -67,10 +60,7 @@ export async function getUser(req: Request, res: Response) {
   }
 }
 
-/**
- * @description Create user
- * @route POST /users/new
- */
+// Create user - POST /users
 export async function createUser(req: Request, res: Response) {
   try {
     const { password, email } = req.body;
@@ -107,11 +97,7 @@ export async function createUser(req: Request, res: Response) {
   }
 }
 
-/**
- * @description Update user
- * @route PUT /users/:id
- */
-
+// Update user - PUT /users/:id
 export async function updateUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -141,15 +127,11 @@ export async function updateUser(req: Request, res: Response) {
   }
 }
 
-/**
- * @description Delete user and favorite jobs
- * @route DELETE /users/:id
- */
-
+// Delete user and favorite jobs - DELETE /user/:id
 export async function deleteUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const posts = await prisma.favoriteJob.deleteMany({
+    const jobs = await prisma.favoriteJob.deleteMany({
       where: {
         userId: parseInt(id),
       },

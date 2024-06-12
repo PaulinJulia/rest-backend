@@ -2,8 +2,6 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prisma } from "../../db/connect";
-import dotenv from "dotenv";
-dotenv.config();
 
 const router = express.Router();
 
