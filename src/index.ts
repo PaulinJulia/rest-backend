@@ -12,9 +12,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// app.get('/', (req, res) => {
-//   res.send('Hello, TypeScript with Express!');
-// });
 app.use("/api", userRouter);
 app.use("/api", jobRouter);
 

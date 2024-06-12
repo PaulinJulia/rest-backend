@@ -1,5 +1,5 @@
 import express from "express";
-//import { auth } from "../../middleware/auth";
+import { auth } from "../../middleware/auth";
 import {
   getJobs,
   getJob,
@@ -18,14 +18,12 @@ const router = express.Router();
 // PUT /jobs/{jobId}: Update a specific job by ID.
 // DELETE /jobs/{jobId}: Delete a specific job by ID.
 
-// POST /users/{userId}/jobs: Create a new favorite job for a specific user.
-
 // CRUD for favorite jobs
-router.get("/jobs", getJobs);
-router.get("/jobs/:id", getJob);
-router.get("/users/:userId/jobs", getJobsByUser);
-router.post("/users/:userId/jobs", createJobByUser);
-router.put("/jobs/:id", updateJob);
-router.delete("/jobs/:id", deleteJob);
+router.get("/jobs", auth, getJobs);
+router.get("/jobs/:id", auth, getJob);
+router.get("/users/:userId/jobs", auth, getJobsByUser);
+router.post("/users/:userId/jobs", auth, createJobByUser);
+router.put("/jobs/:id", auth, updateJob);
+router.delete("/jobs/:id", auth, deleteJob);
 
 export default router;

@@ -1,6 +1,5 @@
 import express from "express";
 import { auth } from "../../middleware/auth";
-//import authRoutes from "./auth.routes";
 
 import {
   getUsers,
@@ -18,9 +17,6 @@ const router = express.Router();
 // POST /users: Create a new user.
 // PUT /users/{userId}: Update a specific user by ID.
 // DELETE /users/{userId}: Delete a specific user by ID.
-
-// Autentiserings- och användarhanteringsrutter
-//router.use(authRoutes);
 
 // CRUD for users
 router.get("/users", auth, getUsers);
