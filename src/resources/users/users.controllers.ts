@@ -1,6 +1,7 @@
 import { prisma } from "../../db/connect";
-import { Request, Response } from "express"; // typescript
+import { Request, Response } from "express"; // för typescript
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 interface Query {
   limit?: string;
@@ -60,7 +61,7 @@ export async function getUser(req: Request, res: Response) {
   }
 }
 
-// Create user - POST /users
+// Create/register user - POST /users
 export async function createUser(req: Request, res: Response) {
   try {
     const { password, email } = req.body;
@@ -78,7 +79,7 @@ export async function createUser(req: Request, res: Response) {
         .json({ error: "User with this email already exists" });
     }
 
-    // Krypterar lösenordet
+    // Hash password
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
@@ -91,11 +92,52 @@ export async function createUser(req: Request, res: Response) {
 
     res.status(201).json({ id: user.id, message: "User created!" });
   } catch (error) {
-    console.error("Error details:", error);
+    console.error("Error:", error);
 
     res.status(500).json({ error: "Database query failed!" });
   }
 }
+
+export async function loginUser(req: Request, res: Response) {
+  try {
+    const { email, password } = req.body;
+
+    // Find user in database
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      throw new Error("Missing JWT_SECRET in environment");
+    }
+    if (!process.env.JWT_EXPIRES_IN) {
+      throw new Error("Missing JWT_EXPIRES_IN in environment");
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      { id: user.id, username: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN || "1h",
+      }
+    );
+    res.json({ token });
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Database query failed!" });
+  }
+};
+
 
 // Update user - PUT /users/:id
 export async function updateUser(req: Request, res: Response) {
