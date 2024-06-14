@@ -6,7 +6,7 @@ https://github.com/PaulinJulia/rest-backend
 
 ## Description
 
-text text text
+This project is a RESTful API with a cloud-based PostgreSQL database via Render. It uses Prisma as ORM to handle database interactions. The project has two resources with relationships in PostgreSQL. As well as authentication with JWT (JSON Web Tokens) to secure the API. It also includes error handling for all endpoints tested with the ThunderClient tool. The project involves setting up the project, configuring the database connection, defining and migrating the database schema, creating endpoints, adding authentication, and testing the API.
 
 
 ## Visuals

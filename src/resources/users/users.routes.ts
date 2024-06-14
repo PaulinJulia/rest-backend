@@ -4,7 +4,7 @@ import { auth } from "../../middleware/auth";
 import {
   getUsers,
   getUser,
-  createUser,
+  registerUser,
   loginUser,
   updateUser,
   deleteUser,
@@ -21,7 +21,7 @@ const router = express.Router();
 // CRUD for users
 router.get("/users", auth, getUsers);
 router.get("/users/:id", auth, getUser);
-router.post("/register", createUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.put("/users/:id", auth, updateUser);
 router.delete("/users/:id", auth, deleteUser);

@@ -1,7 +1,7 @@
 import { prisma } from "../../db/connect";
 import { Request, Response } from "express";
 
-//Get all favorite jobs - GET /jobs
+//Get all favorite jobs - GET /api/jobs
 export async function getJobs(req: Request, res: Response) {
   try {
     const jobs = await prisma.favoriteJob.findMany();
@@ -15,7 +15,7 @@ export async function getJobs(req: Request, res: Response) {
   }
 }
 
-// Get job - GET /jobs/:id
+// Get job - GET /api/jobs/:id
 export async function getJob(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -35,7 +35,7 @@ export async function getJob(req: Request, res: Response) {
   }
 }
 
-//Get jobs by user - GET /users/:userId/jobs
+//Get jobs by user - GET /api/users/:userId/jobs
 export async function getJobsByUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
@@ -58,7 +58,7 @@ export async function getJobsByUser(req: Request, res: Response) {
   }
 }
 
-// Create/save job by user - POST /users/:userId/jobs
+// Create/save job by user - POST /api/users/:userId/jobs
 export async function createJobByUser(req: Request, res: Response) {
   try {
     const { userId } = req.params;
@@ -80,7 +80,7 @@ export async function createJobByUser(req: Request, res: Response) {
   }
 }
 
-//Update job - PUT /jobs/:id
+//Update job - PUT /api/jobs/:id
 export async function updateJob(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -107,7 +107,7 @@ export async function updateJob(req: Request, res: Response) {
   }
 }
 
-//Delete favorite job - DELETE /jobs/:id
+//Delete favorite job - DELETE /api/jobs/:id
 export async function deleteJob(req: Request, res: Response) {
   try {
     const { id } = req.params;

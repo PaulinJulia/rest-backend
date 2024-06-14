@@ -9,7 +9,7 @@ interface Query {
   order?: "asc" | "desc";
 }
 
-//Get all users - GET /users
+//Get all users - GET /api/users
 export async function getUsers(req: Request<{}, {}, {}, Query>, res: Response) {
   //api/users/?limit=21&sort=username&order=asc
   // limit - pagination - default 10
@@ -41,7 +41,7 @@ export async function getUsers(req: Request<{}, {}, {}, Query>, res: Response) {
   }
 }
 
-//Get user by id - GET /users/:id
+//Get user by id - GET /api/users/:id
 export async function getUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -61,8 +61,8 @@ export async function getUser(req: Request, res: Response) {
   }
 }
 
-// Create/register user - POST /users
-export async function createUser(req: Request, res: Response) {
+// Create/register user - POST /api/users
+export async function registerUser(req: Request, res: Response) {
   try {
     const { password, email } = req.body;
 
@@ -139,7 +139,7 @@ export async function loginUser(req: Request, res: Response) {
 };
 
 
-// Update user - PUT /users/:id
+// Update user - PUT /api/users/:id
 export async function updateUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
@@ -169,7 +169,7 @@ export async function updateUser(req: Request, res: Response) {
   }
 }
 
-// Delete user and favorite jobs - DELETE /user/:id
+// Delete user and favorite jobs - DELETE /api/user/:id
 export async function deleteUser(req: Request, res: Response) {
   try {
     const { id } = req.params;
