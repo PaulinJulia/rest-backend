@@ -33,20 +33,20 @@ Render - https://render.com/
 
 ## API Reference
 
-```http
-GET all users - /api/users
-GET user by id - /api/users/:id
-POST create user - /api/register
-POST logga in- /api/login
-PUT update - /api/user/:id
-DELETE - /api/users/:id
+```
+GET all users - /api/users  
+GET user by id - /api/users/:id  
+POST create user - /api/register  
+POST logga in- /api/login  
+PUT update - /api/user/:id  
+DELETE - /api/users/:id  
 
-GET all jobs - /api/jobs
-GET job by id - /api/jobs/:id
-GET jobs by user id - /api/users/:userId/jobs
-PUT uppdatera job - /api/jobs/:id
-POST create job - /api/users/:userId/jobs
-DELETE - /api/jobs/:id
+GET all jobs - /api/jobs  
+GET job by id - /api/jobs/:id  
+GET jobs by user id - /api/users/:userId/jobs  
+PUT uppdatera job - /api/jobs/:id  
+POST create job - /api/users/:userId/jobs  
+DELETE - /api/jobs/:id  
 ```
 ## Environment Variables
 
