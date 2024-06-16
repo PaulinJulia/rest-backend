@@ -10,14 +10,51 @@ This project is a RESTful API with a cloud-based PostgreSQL database via Render.
 
 
 ## Visuals
-
+Prisma studio  
 ![Resources](/src/assets/images/db2.png)
 ![Resources](/src/assets/images/db1.png)
 
-## How to install
+## How to install 
+```  
+cd rest-backend
+npm install  
+npm run dev  
 
+npx prisma studio  
+```
+## Tools
 node.js - https://nodejs.org/en/download  
-npm - https://www.npmjs.com/
+npm - https://www.npmjs.com/  
+Prisma - https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgresql  
+Typescript - https://www.typescriptlang.org/  
+Express - https://expressjs.com/en/starter/installing.html  
+JWT - https://jwt.io/  
+Render - https://render.com/  
+
+## API Reference
+
+```http
+GET all users - /api/users
+GET user by id - /api/users/:id
+POST create user - /api/register
+POST logga in- /api/login
+PUT update - /api/user/:id
+DELETE - /api/users/:id
+
+GET all jobs - /api/jobs
+GET job by id - /api/jobs/:id
+GET jobs by user id - /api/users/:userId/jobs
+PUT uppdatera job - /api/jobs/:id
+POST create job - /api/users/:userId/jobs
+DELETE - /api/jobs/:id
+```
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DATABASE_URL`  
+`JWT_SECRET`
+
 
 ## Usage
 

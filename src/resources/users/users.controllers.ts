@@ -3,33 +3,10 @@ import { Request, Response } from "express"; // för typescript
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-interface Query {
-  limit?: string;
-  sort?: string; // TODO - välj mellan valbara keys
-  order?: "asc" | "desc";
-}
-
 //Get all users - GET /api/users
-export async function getUsers(req: Request<{}, {}, {}, Query>, res: Response) {
-  //api/users/?limit=21&sort=username&order=asc
-  // limit - pagination - default 10
-  // sort - vad som man kan sorteras på - default "id"
-  // order - stigande eller fallande - default "asc"
-  const limit: number = req.query.limit ? parseInt(req.query.limit) : 10;
-  const sortField = req.query.sort || "id";
-  const sortOrder = req.query.order || "asc";
-
-  const sort = { [sortField]: sortOrder };
-
-  console.log("Limit", limit, "SortField", sortField, "SortOrder", sortOrder);
-
-  // use prisma to get all users with error handling
+export async function getUsers(req: Request, res: Response) {
   try {
-    const users = await prisma.user.findMany({
-      take: limit, // Pagination, hur mycket per request
-      orderBy: sort, // Sorterar på viss key och och stigande eller fallende ordning
-    });
-
+    const users = await prisma.user.findMany();
     // if no users are found, return a 404 error
     if (!users.length)
       return res.status(404).json({ message: "No users found" });
@@ -136,8 +113,7 @@ export async function loginUser(req: Request, res: Response) {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Database query failed!" });
   }
-};
-
+}
 
 // Update user - PUT /api/users/:id
 export async function updateUser(req: Request, res: Response) {
